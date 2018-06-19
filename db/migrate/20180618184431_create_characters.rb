@@ -5,7 +5,7 @@ class CreateCharacters < ActiveRecord::Migration[5.0]
         t.integer :strength, default: 12
         t.integer :dexterity, default: 12
         t.integer :constitution, default: 12
-        t.integer :hit_point, default: 8
+        t.integer :hit_points, default: 8
         t.integer :armor_value, default: 0
         t.integer :experience_total, default: 0
         # t.integer :level, default:  1

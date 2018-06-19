@@ -12,32 +12,10 @@ Monster.create(name: "Ogre", strength: 18, dexterity: 8, constitution: 16, hit_d
 Monster.create(name: "Hill Giant", strength: 20, dexterity: 10, constitution: 18, hit_dice: 7, armor_value: 5)
 Monster.create(name: "Hatchling Dragon", strength: 16, dexterity: 10, constitution: 16, hit_dice: 8, armor_value: 8)
 
+Armor.create(name: "cloth", armor_value: 1)
+Armor.create(name: "leather", armor_value: 3)
+Armor.create(name: "chainmail", armor_value: 5)
+Armor.create(name: "plate", armor_value: 7)
 
-# def roll_attribute
-#   tot = rand(6) + 1
-#   tot += rand(6) + 1
-#   tot += rand(6) +1
-#   puts tot
-# end
 
-# def strength_bonus
-# 	if :strength >= 18
-# 		bonus = 4
-# 	elsif :strength >= 16
-# 		bonus = 3
-# 	elsif :strength >= 14
-# 		bonus = 2
-# 	elsif :strength >= 12
-# 		bonus = 1		
-# 	elsif :strength >= 10
-# 		bonus = 0
-# 	elsif :strength >= 8
-# 		bonus = -1
-# 	elsif :strength >= 6
-# 		bonus = -2
-# 	elsif :strength >= 4
-# 		bonus = -3
-# 	else
-# 		bonus = -4
-# 	end
-# end
+

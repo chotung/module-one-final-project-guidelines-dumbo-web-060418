@@ -10,14 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180619162345) do
+ActiveRecord::Schema.define(version: 20180619195517) do
+
+  create_table "armors", force: :cascade do |t|
+    t.string  "name"
+    t.integer "armor_value"
+  end
 
   create_table "characters", force: :cascade do |t|
     t.string  "name"
     t.integer "strength",         default: 12
     t.integer "dexterity",        default: 12
     t.integer "constitution",     default: 12
-    t.integer "hit_point",        default: 8
+    t.integer "hit_points",       default: 8
     t.integer "armor_value",      default: 0
     t.integer "experience_total", default: 0
     t.string  "main_hand"
@@ -34,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180619162345) do
     t.integer "dexterity"
     t.integer "constitution"
     t.integer "hit_dice"
+    t.integer "hit_points"
     t.integer "armor_value"
   end
 
