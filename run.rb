@@ -19,3 +19,4 @@ require_relative 'config/environment'
 
 current_character = Game.welcome
 current_game = Game.new_game(current_character)
+current_game.weapon_choice
