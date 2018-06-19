@@ -3,7 +3,7 @@ class Player < ActiveRecord::Base
 
 	def self.get_username
 	name1 = gets.chomp
-	puts "Welcome, #{name1}"
+	puts "Welcome, #{name1}..."
 	Player.find_or_create_by(username:name1)
 	end
 
