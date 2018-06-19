@@ -1,5 +1,6 @@
 class Character < ActiveRecord::Base
 	belongs_to :player
+	has_one :character_sheet
 	has_many :weapons
 	has_many :battles
 
@@ -39,34 +40,16 @@ class Character < ActiveRecord::Base
 		current_character.update({hit_points: hit_points})
 		total_armor_bonus = calculate_total_armor_bonus(dex_bonus, current_character.armor_value)
 		armor_class = calculate_armor_class(total_armor_bonus)
-
-		puts "___________________________________________"
-		puts "|#{name1}"
-		puts "|                                          |"
-		puts "| HP :  #{hit_points}                                  |"
-		puts "|                                          |"
-		print "| ARMOR CLASS : #{armor_class}"
-		if armor_class > 9
-			puts"                         |"
-		else
-			puts"                          |"
-		end
-		puts "|                                          |"
-		puts "| STR #{str_total}  : #{str_bonus}                              |"
-		puts "|                                          |"
-		puts "| DEX #{dex_total}  : #{dex_bonus}                              |"
-		puts "|                                          |"
-		puts "| CON #{con_total}  : #{con_bonus}                              |"
-		puts "|                                          |"
-		puts "| WEAPON : NONE                            |"
-		puts "|                                          |"
-		puts "| ARMOR : NONE                             |"
-		puts "|                                          |"
-		puts "____________________________________________"
+		# weapon = "NONE"
+		# armor = "NONE"
+		# sheet = current_character.character_sheet(name1, hit_points, armor_class, str_total, dex_total, con_total, str_bonus, dex_bonus, con_bonus, weapon, armor )
+		# sheet
 
 		current_character
 
 	end
+
+
 
 	def roll_attributes
 		tot = rand(6) + 1
@@ -120,4 +103,31 @@ class Character < ActiveRecord::Base
 		ac = 10 - total_armor_bonus
 		ac
 	end
+
+	# def character_sheet(name1, hit_points, armor_class, str_total, dex_total, con_total, str_bonus, dex_bonus, con_bonus, weapon, armor)
+	# 	puts "___________________________________________"
+	# 	puts "|#{name1}"
+	# 	puts "|                                          |"
+	# 	puts "| HP :  #{hit_points}                                  |"
+	# 	puts "|                                          |"
+	# 	print "| ARMOR CLASS : #{armor_class}"
+	# 	if armor_class > 9
+	# 		puts"                         |"
+	# 	else
+	# 		puts"                          |"
+	# 	end
+	# 	puts "|                                          |"
+	# 	puts "| STR #{str_total}  : #{str_bonus}                              |"
+	# 	puts "|                                          |"
+	# 	puts "| DEX #{dex_total}  : #{dex_bonus}                              |"
+	# 	puts "|                                          |"
+	# 	puts "| CON #{con_total}  : #{con_bonus}                              |"
+	# 	puts "|                                          |"
+	# 	puts "| WEAPON : #{weapon}                            |"
+	# 	puts "|                                          |"
+	# 	puts "| ARMOR : #{armor}                             |"
+	# 	puts "|                                          |"
+	# 	puts "____________________________________________"	
+		
+	# end
 end
