@@ -6,7 +6,7 @@ class CreateMonsters < ActiveRecord::Migration[5.0]
         t.integer :strength
         t.integer :dexterity
         t.integer :constitution
-        t.integer :hit_point
+        t.integer :hit_dice
         t.integer :armor_value
     end
   end

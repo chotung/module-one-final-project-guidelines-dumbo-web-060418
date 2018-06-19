@@ -19,14 +19,13 @@ ActiveRecord::Schema.define(version: 20180618185436) do
 
   create_table "characters", force: :cascade do |t|
     t.string  "name"
-    t.integer "strength"
-    t.integer "dexterity"
-    t.integer "constitution"
-    t.integer "hit_point"
-    t.integer "armor_value"
-    t.integer "experience_total"
+    t.integer "strength",         default: 12
+    t.integer "dexterity",        default: 12
+    t.integer "constitution",     default: 12
+    t.integer "hit_point",        default: 8
+    t.integer "armor_value",      default: 10
+    t.integer "experience_total", default: 0
     t.string  "main_hand"
-    t.string  "off_hand"
     t.integer "player_id"
   end
 
