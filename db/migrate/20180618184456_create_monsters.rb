@@ -9,6 +9,7 @@ class CreateMonsters < ActiveRecord::Migration[5.0]
         t.integer :hit_dice
         t.integer :hit_points
         t.integer :armor_value
+        t.string :main_hand
     end
   end
 end

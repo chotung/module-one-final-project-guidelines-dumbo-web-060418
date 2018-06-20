@@ -23,10 +23,12 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "dexterity",        default: 12
     t.integer "constitution",     default: 12
     t.integer "hit_points",       default: 8
+    t.integer "max_hp",           default: 8
     t.integer "armor_value",      default: 0
     t.integer "experience_total", default: 0
     t.string  "main_hand"
     t.integer "player_id"
+    t.integer "status"
   end
 
   create_table "games", force: :cascade do |t|
@@ -41,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "hit_dice"
     t.integer "hit_points"
     t.integer "armor_value"
+    t.string  "main_hand"
   end
 
   create_table "players", force: :cascade do |t|

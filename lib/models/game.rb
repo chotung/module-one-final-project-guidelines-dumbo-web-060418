@@ -3,8 +3,71 @@ class Game < ActiveRecord::Base
 
 
 	def self.welcome
-		puts "hello! it's dungeon time!!!!"
-		sleep(1)
+		puts "hello!"
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts "        it's.............."
+		puts ""
+		puts " ▄▀▀█▄▄   ▄▀▀▄ ▄▀▀▄  ▄▀▀▄ ▀▄  ▄▀▀▀▀▄    ▄▀▀█▄▄▄▄  ▄▀▀▀▀▄   ▄▀▀▄ ▀▄ "
+		puts "█ ▄▀   █ █   █    █ █  █ █ █ █         ▐  ▄▀   ▐ █      █ █  █ █ █ "
+		puts "▐ █    █ ▐  █    █  ▐  █  ▀█ █    ▀▄▄    █▄▄▄▄▄  █      █ ▐  █  ▀█ "
+		puts "  █    █   █    █     █   █  █     █ █   █    ▌  ▀▄    ▄▀   █   █  "
+		puts " ▄▀▄▄▄▄▀    ▀▄▄▄▄▀  ▄▀   █   ▐▀▄▄▄▄▀ ▐  ▄▀▄▄▄▄     ▀▀▀▀   ▄▀   █   "
+		puts "█     ▐             █    ▐   ▐          █    ▐            █    ▐   "
+		puts "▐                   ▐                   ▐                 ▐        "
+		puts " ▄▀▀▀█▀▀▄  ▄▀▀█▀▄    ▄▀▀▄ ▄▀▄  ▄▀▀█▄▄▄▄                            "
+		puts "█    █  ▐ █   █  █  █  █ ▀  █ ▐  ▄▀   ▐                            "
+		puts "▐   █     ▐   █  ▐  ▐  █    █   █▄▄▄▄▄                             "
+		puts "   █          █       █    █    █    ▌                             "
+		puts " ▄▀        ▄▀▀▀▀▀▄  ▄▀   ▄▀    ▄▀▄▄▄▄                              "
+		puts "█         █       █ █    █     █    ▐                              "
+		puts "▐         ▐       ▐ ▐    ▐     ▐       "
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+		puts ""
+
+
+		
 		puts "enter a username"
 		player = Player.get_username
 		sleep(1)
@@ -18,37 +81,19 @@ class Game < ActiveRecord::Base
 		Game.create(character_id:character.id)
 	end
 
-
-	# def yes_no_loop
-	#
-	# 	while true
-	# 		input = gets.chomp
-	# 		if input == "yes" || "Yes" || "Y" || "y"
-	# 			true
-	# 		elsif
-	# 			input == "no" || "No" || "N" || "n"
-	# 			false
-	# 		end
-	# 		puts "You probably should say Yes"
-	# 	end
-	# end
-
-
 	def ask_weapon
 		puts "Hello #{self.character.name} do you want a weapon?"
+		puts " yes  |  no"
 			input = gets.chomp.downcase
-			# while input != "yes" || "Yes" || "Y" || "y"
-			#
-			# 	puts "you should say take a weapon"
-			#
-			# end
 
 			case input
 				when 'y', 'yes'
-					puts "amazing I knew you would"
+					sleep(1)
+					puts "Amazing. I knew you would"
 					return true
 				else
-					puts "you should say take a weapon"
+					sleep(1)
+					puts "You should really take a weapon. The dungeon is dangerous."
 					ask_weapon
 				end
 		end
@@ -58,23 +103,29 @@ class Game < ActiveRecord::Base
 			if ask_weapon == true
 
 				puts "What weapon would you like?"#if yes give them the choice of weapon
-				puts "Sword"
-				puts "Club"
+				puts " Club  |  Dagger  |  Sword  |  Axe "
 				sleep(3)
-				weapon_input	= gets.chomp.downcase
-
+				weapon_input = gets.chomp.downcase
 				if weapon_input == "sword"
 					weapon = Weapon.find_by(id: 3).name
-					# self.character.weapons << weapon
 					self.character.update({main_hand: weapon})
-					binding.pry
 				elsif weapon_input == "club"
 					weapon1 = Weapon.find_by(id: 1).name
 					self.character.update({main_hand: weapon1})
-
+				elsif weapon_input == "axe"
+					weapon1 = Weapon.find_by(id: 4).name
+					self.character.update({main_hand: weapon1})
+				elsif weapon_input == "dagger"
+					weapon1 = Weapon.find_by(id: 2).name
+					self.character.update({main_hand: weapon1})
+				elsif weapon_input == "+1 sword"
+					weapon1 = Weapon.find_by(id: 11).name
+					self.character.update({main_hand: weapon1})
 				else weapon_choice
 				end
 			end
+
+			# binding.pry
 		end
 
 		#update character and weapon schema
@@ -110,28 +161,98 @@ class Game < ActiveRecord::Base
 		# 			end
 		# 		end
 		# 	end
+		def town(character)
+			puts "You are milling about in town swinging your #{character.main_hand}"
+			puts ""
+			puts ""
+			puts "Your insatiable thirst for adventure compells you you leave. Do you want to travel to the edge of town?"
+			puts ""
+			puts " yes  |  no"
+			answer = gets.chomp.downcase
+			case answer
+				when "yes", "y"
+					puts "You leave town to test your mettle in the dungeon."
+					puts "It's DUNGEON TIME!!!!"
+					status = :adventuring
+					status
+				when "no", "n"
+					# puts "You try to run, but you are surrounded... You have been Slain..." if player HP reaches zero
+					puts "You are a coward. Have fun swinging your #{character.main_hand} all by yourself."
+					status = :in_town
+					status
+				else
+					sleep(2)
+					puts "Come again?"
+					town(character)
+			end
 
-		# def adventure_one(character)
-		# 	puts " #{character} you find yourself surrounded by goblins you must defend yourself, do you? Yes or No?"
-		#
-		# 	input = gets.chomp
+		end
 
-		# 	case statement
 
-		# 	if input == "no" || "No" || "N" || "n"
-		# 		# puts "You have been Slain..." if player HP reaches zero
-		# 		puts "You have ran like a coward!!!"
-		#
-		# 	elsif input == "yes" || "Yes" || "Y" || "y"
-		# 		# hit_dice will be used in HP
-		# 		#player goes first
-		# 		#player attacks
-		# 		#if attack is greater than monster hit_dice
-		# 		#end the encounter
-		# 		#else monster attacks
-		# 		#subtract player Hitpoint by monster attacks
-		#
-		# 	end
-		# end
+
+		def adventure_one(character)
+			puts ""
+			puts ""
+			puts " #{character.name}, you find yourself surrounded by goblins you must defend yourself, do you fight? Yes or No?"
+		
+			answer = gets.chomp.downcase
+
+			case answer
+				when "yes", "y"
+					puts "One rather large Goblin steps forward to challenge you..."
+					puts "the fight begins"
+					monster_type = "Goblin"
+					monster_type
+
+				when "no", "n"
+					# puts "You try to run, but you are surrounded... You have been Slain..." if player HP reaches zero
+					puts "You run like a coward!!!"
+				else
+					puts "What's that?"
+					adventure_one(character)
+			end
+		end
+
+		def adventure_two(character)
+			puts ""
+			
+		end
+
+
+		def adventure_three(character)
+			
+		end
+
+		def adventure_four(character)
+			
+		end
+
+		def adventure_five(character)
+			
+		end		
+
+
+		def adventure_six(character)
+			
+		end
+
+		def adventure_seven(character)
+			
+		end
+
+		def self.game_over
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts " "
+			puts "GAME OVER!!!!"
+		end
 
 end#class end
