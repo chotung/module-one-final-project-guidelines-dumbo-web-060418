@@ -76,7 +76,7 @@ current_game.game_over(current_game.character)
 # 	status = current_game.town(character)
 
 # 	if status == :adventuring
-		
+
 # 	monster_type = current_game.adventure_one(character)
 
 # 	current_monster = Monster.generate_monster(monster_type)
@@ -87,7 +87,3 @@ current_game.game_over(current_game.character)
 # 		current_status(:in_town, character)
 # 	end
 # end
-
-
-
-

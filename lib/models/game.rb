@@ -27,7 +27,7 @@ class Game < ActiveRecord::Base
   		print "Press ENTER to embark on your journey..."
   		gets
 
-		
+
 		puts "enter a username"
 		player = Player.get_username
 		puts ""
@@ -36,7 +36,7 @@ class Game < ActiveRecord::Base
 		sleep(1)
 		puts ""
 		Character.character_setup(player)
-		
+
 	end
 
 	def self.new_game(character)
@@ -168,6 +168,31 @@ class Game < ActiveRecord::Base
 					town(character)
 			end
 
+<<<<<<< HEAD
+		def adventure_one(character)
+			puts " #{character} you find yourself surrounded by goblins you must defend yourself, do you? Yes or No?"
+		#
+		input = gets.chomp.downcase
+
+		# 	case statement
+		case input
+		when "yes", 'y'
+
+		# 	if input == "no" || "No" || "N" || "n"
+		# 		# puts "You have been Slain..." if player HP reaches zero
+		# 		puts "You have ran like a coward!!!"
+		#
+		# 	elsif input == "yes" || "Yes" || "Y" || "y"
+		# 		# hit_dice will be used in HP
+		# 		#player goes first
+		# 		#player attacks
+		# 		#if attack is greater than monster hit_dice
+		# 		#end the encounter
+		# 		#else monster attacks
+		# 		#subtract player Hitpoint by monster attacks
+		#
+		# 	end
+=======
 		end
 
 	def get_adventure(character) # combat must have monster_type = monter name, || if non-combat, monster_type must = :none
@@ -176,7 +201,7 @@ class Game < ActiveRecord::Base
 			puts ""
 			puts ""
 			puts " #{character.name}, you find yourself surrounded by goblins! You must defend yourself, do you fight? Yes or No."
-		
+
 			answer = gets.chomp.downcase
 
 			case answer
@@ -192,7 +217,7 @@ class Game < ActiveRecord::Base
 					monster_type = "Goblin"
 					monster_type
 
-				when "no", "n"			
+				when "no", "n"
 					system('clear')
 					puts ""
 					puts "You run like a coward, all the way back to town."
@@ -216,7 +241,7 @@ class Game < ActiveRecord::Base
 			puts ""
 			puts ""
 			puts "Something is skittering behind you. you swivel around and see KOBOLDS! do you attack? Yes or No."
-				
+
 			answer = gets.chomp.downcase
 
 				case answer
@@ -232,7 +257,7 @@ class Game < ActiveRecord::Base
 					monster_type = "Kobold"
 					monster_type
 
-				when "no", "n"			
+				when "no", "n"
 					system('clear')
 					puts ""
 					puts "You just ran from a kobold, you're ashamed to return to town."
@@ -258,7 +283,7 @@ class Game < ActiveRecord::Base
 			puts ""
 			puts "You turn a corner in the dangerous dungeon and see a Hobgoblin standing there, about to attack you."
 			puts "He's big and ugly. Do you attack? Yes or no."
-				
+
 			answer = gets.chomp.downcase
 
 				case answer
@@ -274,7 +299,7 @@ class Game < ActiveRecord::Base
 					monster_type = "Hobgoblin"
 					monster_type
 
-				when "no", "n"			
+				when "no", "n"
 					system('clear')
 					puts ""
 					puts "You run back to town and you realize you were so scared, you started crying."
@@ -503,12 +528,12 @@ class Game < ActiveRecord::Base
 						monster_type = :none
 						return monster_type
 					end
-					
+
 			end
 		end
 
 		def adventure_five(character)
-		
+
 			wep = ["Morning Star", "Axe", "Sword"].sample
 
 			puts ""
@@ -535,12 +560,12 @@ class Game < ActiveRecord::Base
 					puts ""
 					monster_type = :none
 					return monster_type
-			end							
+			end
 		end
 
 		x = rand(1..99)
 
-		case x 
+		case x
 		when 1..30
 			#goblin
 			monster_type = adventure_one(character)
@@ -561,7 +586,7 @@ class Game < ActiveRecord::Base
 			monster_type = adventure_five(character)
 			return monster_type
 		end
-		
+
 	end
 
 
@@ -572,11 +597,11 @@ class Game < ActiveRecord::Base
 
 
 		def adventure_six(character)
-			
+
 		end
 
 		def adventure_seven(character)
-			
+
 		end
 
 		def game_over(character)
@@ -610,8 +635,8 @@ class Game < ActiveRecord::Base
 			else
 				puts "       #{character.name} was probably the worst adventurer that ever lived."
 			end
-			11.times { puts ""}		
-						
+			11.times { puts ""}
+
 			puts "GAME OVER!!!!"
 			5.times { puts ""}
 			hof = Character.all.max_by(5) do |c|
@@ -628,6 +653,7 @@ class Game < ActiveRecord::Base
 			# puts "Dungeon Time™ Hall of Fame"
 			# puts table
 
+>>>>>>> 4b647a025a7dc26759334fec60ecf06a0dfa6ff7
 		end
 
 end#class end
