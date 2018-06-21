@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "max_hp",           default: 8
     t.integer "armor_value",      default: 0
     t.integer "experience_total", default: 0
+    t.integer "level",            default: 1
+    t.string  "armor"
     t.string  "main_hand"
     t.integer "player_id"
     t.integer "status"
@@ -44,6 +46,7 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "hit_points"
     t.integer "armor_value"
     t.string  "main_hand"
+    t.integer "exp_value"
   end
 
   create_table "players", force: :cascade do |t|
@@ -55,6 +58,7 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "min_damage"
     t.integer "max_damage"
     t.integer "armor_value"
+    t.integer "attack_bonus"
   end
 
 end

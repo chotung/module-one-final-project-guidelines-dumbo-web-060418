@@ -9,8 +9,8 @@ class CreateCharacters < ActiveRecord::Migration[5.0]
         t.integer :max_hp, default: 8
         t.integer :armor_value, default: 0
         t.integer :experience_total, default: 0
-        # t.integer :level, default:  1
-        # t.string :armor
+        t.integer :level, default:  1
+        t.string :armor
         t.string :main_hand, default: nil
         # t.string :off_hand, default:  nil
         t.integer :player_id
