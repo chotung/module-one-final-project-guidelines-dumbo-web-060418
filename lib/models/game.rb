@@ -11,7 +11,7 @@ class Game < ActiveRecord::Base
 		puts "it's time to roll up a character!"
 		sleep(1)
 		Character.character_setup(player)
-		
+
 	end
 
 	def self.new_game(character)
@@ -61,13 +61,13 @@ class Game < ActiveRecord::Base
 				puts "Sword"
 				puts "Club"
 				sleep(3)
-				weapon_input	= gets.chomp.downcase
+				weapon_input = gets.chomp.downcase
 
 				if weapon_input == "sword"
 					weapon = Weapon.find_by(id: 3).name
 					# self.character.weapons << weapon
 					self.character.update({main_hand: weapon})
-					binding.pry
+					# binding.pry
 				elsif weapon_input == "club"
 					weapon1 = Weapon.find_by(id: 1).name
 					self.character.update({main_hand: weapon1})
@@ -111,12 +111,14 @@ class Game < ActiveRecord::Base
 		# 		end
 		# 	end
 
-		# def adventure_one(character)
-		# 	puts " #{character} you find yourself surrounded by goblins you must defend yourself, do you? Yes or No?"
+		def adventure_one(character)
+			puts " #{character} you find yourself surrounded by goblins you must defend yourself, do you? Yes or No?"
 		#
-		# 	input = gets.chomp
+		input = gets.chomp.downcase
 
 		# 	case statement
+		case input
+		when "yes", 'y'
 
 		# 	if input == "no" || "No" || "N" || "n"
 		# 		# puts "You have been Slain..." if player HP reaches zero
@@ -132,6 +134,6 @@ class Game < ActiveRecord::Base
 		# 		#subtract player Hitpoint by monster attacks
 		#
 		# 	end
-		# end
+		end
 
 end#class end
