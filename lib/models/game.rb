@@ -69,7 +69,7 @@ class Game < ActiveRecord::Base
 		def weapon_choice
 
 			if ask_weapon == true
-				puts "What weapon would you like?"#if yes give them the choice of weapon
+				puts "What weapon would you like?"
 				puts ""
 				puts " Club  |  Dagger  |  Rusty Sword"
 				sleep(3)
@@ -93,8 +93,6 @@ class Game < ActiveRecord::Base
 					weapon_choice
 				end
 			end
-
-			# binding.pry
 		end
 
 		#update character and weapon schema
@@ -167,32 +165,6 @@ class Game < ActiveRecord::Base
 					puts "Come again?"
 					town(character)
 			end
-
-<<<<<<< HEAD
-		def adventure_one(character)
-			puts " #{character} you find yourself surrounded by goblins you must defend yourself, do you? Yes or No?"
-		#
-		input = gets.chomp.downcase
-
-		# 	case statement
-		case input
-		when "yes", 'y'
-
-		# 	if input == "no" || "No" || "N" || "n"
-		# 		# puts "You have been Slain..." if player HP reaches zero
-		# 		puts "You have ran like a coward!!!"
-		#
-		# 	elsif input == "yes" || "Yes" || "Y" || "y"
-		# 		# hit_dice will be used in HP
-		# 		#player goes first
-		# 		#player attacks
-		# 		#if attack is greater than monster hit_dice
-		# 		#end the encounter
-		# 		#else monster attacks
-		# 		#subtract player Hitpoint by monster attacks
-		#
-		# 	end
-=======
 		end
 
 	def get_adventure(character) # combat must have monster_type = monter name, || if non-combat, monster_type must = :none
@@ -639,21 +611,24 @@ class Game < ActiveRecord::Base
 
 			puts "GAME OVER!!!!"
 			5.times { puts ""}
-			hof = Character.all.max_by(5) do |c|
-				c.experience_total
+
+		
+			bigarray = Character.all.max_by(5) { |c| c.experience_total }
+			i = 0
+			hof = bigarray.map do |char|
+				i += 1
+				["#{i}.", char.name, char.player.username]
 			end
-			# hof_name = hof.map do |c|
-
-
+			hof.unshift(["Rank", "Character", "Player"])
 			# rows = []
-			# rows << ['1.', 'One', 1]
+			# rows << [['1.', 'Paulius', "Paul"], [row2]]
 			# rows << ['2.', 'Two', 2]
 			# rows << ['3.','Three', 3]
-			# table = Terminal::Table.new :rows => rows
-			# puts "Dungeon Time™ Hall of Fame"
-			# puts table
+			table = Terminal::Table.new :rows => hof
+			puts "Dungeon Time™ Hall of Fame"
+			puts table
 
->>>>>>> 4b647a025a7dc26759334fec60ecf06a0dfa6ff7
+
 		end
 
-end#class end
+end
