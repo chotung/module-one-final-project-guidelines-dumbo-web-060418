@@ -9,3 +9,5 @@ tmp
 *.iml
 *.log
 *.swp
+db/schema.rb
+db/development.db

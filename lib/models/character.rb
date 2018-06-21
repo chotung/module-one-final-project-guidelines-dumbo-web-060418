@@ -85,7 +85,7 @@ class Character < ActiveRecord::Base
 		elsif attribute >= 14
 			bonus = 2
 		elsif attribute >= 12
-			bonus = 1		
+			bonus = 1
 		elsif attribute >= 10
 			bonus = 0
 		elsif attribute >= 8
@@ -102,7 +102,7 @@ class Character < ActiveRecord::Base
 
 	def calculate_hit_points(bonus, base_hp)
 		hp = base_hp + bonus
-		hp	
+		hp
 	end
 
 	def calculate_total_armor_bonus(dex_bonus, armor_bonus)
@@ -119,10 +119,10 @@ class Character < ActiveRecord::Base
 
 
 	def check_xp
-		
-		XP = self.experience_total
 
-		case XP
+		xp = self.experience_total
+
+		case xp
 		when 0..10
 			newlvl = 1
 		when 11..20
@@ -148,7 +148,7 @@ class Character < ActiveRecord::Base
 		self.update({max_hp:new_hp})
 		new_lvl = self.level + 1
 		self.update({level:new_lvl})
-		
+
 	end
 
 	def character_sheet
@@ -203,7 +203,7 @@ class Character < ActiveRecord::Base
 		xp_length.times { print " "}
 		puts "|"
 		puts "|                                          |"
-		puts "____________________________________________"	
-		
+		puts "____________________________________________"
+
 	end
 end

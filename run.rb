@@ -4,7 +4,11 @@ ActiveRecord::Base.logger = nil # comment out if want to see SQL logs
 
 
 system('clear')
+
+pid = fork{ exec 'afplay', "media/Far-Away-Places-Call.mp3"}
+
 current_character = Game.welcome
+
 current_game = Game.new_game(current_character)
 
 current_game.weapon_choice
@@ -24,7 +28,7 @@ status = current_game.character.status # status is set to 0 = in town, 1 = adven
 
 
 while status < 2
-	case status
+  case status
 	when 0
 		current_game.town(current_game.character)
 		status = current_game.character.status
@@ -41,7 +45,6 @@ while status < 2
 				encounter_result = Battle.combat(current_game.character, current_monster)
 				status = current_game.character.status
 				system("clear")
-
 				puts ""
 				puts "Your current status:"
 				puts ""
@@ -50,7 +53,7 @@ while status < 2
 		end
 	end
 end
-
+pid = fork{ exec 'killall', "afplay" }
 current_game.game_over(current_game.character)
 
 # 	monster_type = current_game.adventure_one(current_game.character)
