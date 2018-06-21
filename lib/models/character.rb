@@ -120,9 +120,9 @@ class Character < ActiveRecord::Base
 
 	def check_xp
 		
-		XP = self.experience_total
+		xp = self.experience_total
 
-		case XP
+		case xp
 		when 0..10
 			newlvl = 1
 		when 11..20
@@ -142,13 +142,48 @@ class Character < ActiveRecord::Base
 	end
 
 	def level_up
+		puts ""
+		puts "Congratulations, you've gained a level!"
+		puts ""
 		old_hit_points = self.max_hp
+		puts "press ENTER to roll 1d8 for hit points"
+		gets
 		added_hp = self.roll_hit_points + attribute_bonus(self.constitution)
 		new_hp = old_hit_points + added_hp
 		self.update({max_hp:new_hp})
 		new_lvl = self.level + 1
 		self.update({level:new_lvl})
-		
+		self.improve_attribute
+							
+
+	end
+
+	def improve_attribute
+		puts ""
+		puts "Choose an attribute to improve"
+		puts ""
+		puts "    Strength  |  Dexterity  |  Constitution"
+		answer = gets.chomp.downcase
+
+		case answer
+				when "strength", "str", "s"
+					str = self.strength + 1
+					self.update({strength:str})
+				when "dexterity", "dex", "d"
+					dex = self.dexterity + 1
+					self.update({dexterity:dex})
+				when "constitution", "con", "c"
+					con = self.constitution + 1
+					self.update({constitution:con})
+					if con%2 == 0
+							new_max_hp = self.max_hp + self.level
+							self.update({max_hp:new_max_hp})
+					else
+					end
+				when "charisma", "intelligence", "wisdom"
+				puts "No, you don't get to do that in a HACK and SLASH like Dungeon Time™!"
+				else
+		end
 	end
 
 	def character_sheet
@@ -197,7 +232,7 @@ class Character < ActiveRecord::Base
 		weapon_length.times { print " "}
 		puts "|"
 		puts "|                                          |"
-		puts "| ARMOR : #{armor}                                |"
+		puts "| ARMOR : #{armor}                                 |"
 		puts "|                                          |"
 		print "| EXPERIENCE : #{xp}"
 		xp_length.times { print " "}

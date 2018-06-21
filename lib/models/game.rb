@@ -416,7 +416,7 @@ class Game < ActiveRecord::Base
 						when 3
 							new_con = character.constitution + 2
 							character.update({constitution:new_con})
-							new_max_hp = character.max_hp + 1 #add 1 per XP level
+							new_max_hp = character.max_hp + character.level
 							character.update({max_hp:new_max_hp})
 							puts ""
 							puts "You feel a strange sense of confidence brewing inside you!"
@@ -484,7 +484,7 @@ class Game < ActiveRecord::Base
 
 					case answer
 					when "yes", "y"
-						#+50 experience_total, heals
+						#+20 experience_total, heals
 						new_hp = character.max_hp
 						character.update({hit_points:new_hp})
 						new_xp = character.experience_total + 20
@@ -494,6 +494,7 @@ class Game < ActiveRecord::Base
 						puts "A strange sense of clarity comes over you!"
 						puts ""
 						character.character_sheet
+						character.check_xp
 						return monster_type
 					else
 						puts ""

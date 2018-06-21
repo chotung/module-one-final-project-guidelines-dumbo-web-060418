@@ -65,6 +65,7 @@ class Battle # < ActiveRecord::Base
 					attacker.update({status:1})
 					exp = attacker.experience_total + defender.exp_value
 					attacker.update({experience_total:exp })
+					attacker.check_xp
 				else
 					puts "#{attacker.name} lands a crushing blow to your head..."
 					sleep(2)
