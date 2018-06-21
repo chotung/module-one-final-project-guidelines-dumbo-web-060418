@@ -3,6 +3,7 @@ require_relative 'config/environment'
 ActiveRecord::Base.logger = nil # comment out if want to see SQL logs
 
 system('clear')
+pid = fork{ exec 'afplay', "media/Far-Away-Places-Call.mp3"}
 current_character = Game.welcome
 current_game = Game.new_game(current_character)
 
@@ -51,7 +52,7 @@ while status < 2
 end
 
 current_game.game_over(current_game.character)
-
+pid = fork{ exec 'killall', "afplay" }
 # 	monster_type = current_game.adventure_one(current_game.character)
 
 # 	current_monster = Monster.generate_monster(monster_type)
