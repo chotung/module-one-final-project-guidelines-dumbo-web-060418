@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "armor_value",      default: 0
     t.integer "experience_total", default: 0
     t.integer "level",            default: 1
-    t.string  "armor"
+    t.string  "armor",            default: "Cloth Armor"
     t.string  "main_hand"
     t.integer "player_id"
     t.integer "status"

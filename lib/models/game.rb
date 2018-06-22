@@ -75,21 +75,24 @@ class Game < ActiveRecord::Base
 				sleep(3)
 				weapon_input = gets.chomp.downcase
 				case weapon_input
-				when "sword", "rusty sword"
+				when "sword", "rusty sword", "rusty", "rust", "r"
 					weapon = Weapon.find_by(id: 12).name
 					self.character.update({main_hand: weapon})
-				when "club"
+				when "club", "c"
 					weapon1 = Weapon.find_by(id: 1).name
 					self.character.update({main_hand: weapon1})
-				when "dagger"
+				when "dagger", "d"
 					weapon2 = Weapon.find_by(id: 2).name
 					self.character.update({main_hand: weapon2})
 				when "+1 sword"
 					weapon3 = Weapon.find_by(id: 11).name
 					self.character.update({main_hand: weapon3})
 				else
+					puts ""
 					puts "Sorry, we don't have a #{weapon_input}"
+					puts ""
 					puts "try picking something we have in stock"
+					puts ""
 					weapon_choice
 				end
 			end
@@ -535,27 +538,282 @@ class Game < ActiveRecord::Base
 			end
 		end
 
-		x = rand(1..99)
+		def adventure_six(character)
+			#armor adventure
+			arm = ["Cloth Armor", "Leather Armor", "Chainmail", "Plate Armor"].sample
 
+			puts ""
+			puts "you come across the body of a slain adventurer"
+			puts ""
+			puts "The #{arm} he was wearing still seems to be in decent condition"
+			puts ""
+			puts "Do you equip it?"
+			answer = gets.chomp.downcase
+
+				case answer
+				when "yes", "y"
+					puts ""
+					puts "You enthusiastically don your new #{arm}"
+					puts ""
+					character.update({armor:arm})
+					new_armor_value = Armor.find_by(name:arm).armor_value
+					character.update({armor_value:new_armor_value})
+					character.character_sheet
+					monster_type = :none
+					return monster_type
+
+				else
+					puts ""
+					puts "You're happy with your #{character.armor}, no reason to switch armor now..."
+					puts ""
+					monster_type = :none
+					return monster_type
+				end	
+		end
+
+		def adventure_seven(character)
+			#bugbear
+			puts ""
+			puts ""
+			puts "You hear the sound of heavy footfalls. That's no Goblin, that's a BUGBEAR!"
+			puts "This thing is a head and a half taller than you, and has a huge club."
+			puts "There's no way, you'll fight this thing... is there?"
+
+			answer = gets.chomp.downcase
+
+				case answer
+				when "yes", "y"
+					puts ""
+					puts "This dungeon isn't big enough for the two of us!"
+					puts ""
+					puts "the fight begins"
+					puts ""
+					Battle.fight_animation
+					Battle.fight_animation
+					Battle.fight_animation
+					monster_type = "Bugbear"
+					monster_type
+
+				when "no", "n"
+					system('clear')
+					puts ""
+					puts "That was a close call... You know deep in your heart you made the right move."
+					puts ""
+					sleep(3)
+					puts ""
+					puts "           -------------------"
+					puts "          |  Welcome to town  |"
+					puts "           -------------------"
+					puts ""
+					puts "The townsfolk are impressed you faced a Bugbear and lived"
+					puts ""
+					puts "No one faults you for running, but a stronger warrior would have dispatched it."
+					character.character_sheet
+					character.update({status: 0})
+				else
+					puts ""
+					puts "What's that?"
+					puts ""
+					adventure_one(character)
+				end
+		end
+
+		def adventure_eight(character)
+			#ogre
+			puts ""
+			puts ""
+			puts "Holy crap!"
+			puts ""
+			sleep(2)
+			puts "An Ogre!"
+			puts "It would make sense to flee... Will you attack?"
+			puts ""
+			puts "    Yes  |  No"
+
+			answer = gets.chomp.downcase
+
+				case answer
+				when "yes", "y"
+					puts ""
+					puts "This Ogre needs a little more #{character.main_hand} in his life!"
+					puts ""
+					puts "the fight begins"
+					puts ""
+					Battle.fight_animation
+					Battle.fight_animation
+					Battle.fight_animation
+					monster_type = "Ogre"
+					monster_type
+
+				when "no", "n"
+					system('clear')
+					puts ""
+					puts "Yeah. You ran away. What?"
+					puts ""
+					sleep(3)
+					puts ""
+					puts "           -------------------"
+					puts "          |  Welcome to town  |"
+					puts "           -------------------"
+					puts ""
+					puts "One day, when you're strong enough, you'll take that Ogre down..."
+					puts ""
+					character.character_sheet
+					character.update({status: 0})
+				else
+					puts ""
+					puts "What's that?"
+					puts ""
+					adventure_one(character)
+				end		
+		end
+
+		def adventure_nine(character)
+			#hillgiant
+			puts ""
+			puts ""
+			puts "There's a man as big as a house. You are about to say hello- oh, shit, he's angry!"
+			puts ""
+			puts "Please don't try to fight this thing..."
+			puts ""
+			puts "Attack?"
+			puts ""
+			puts "    Yes (bad idea) |  No (good idea)"
+
+			answer = gets.chomp.downcase
+
+				case answer
+				when "yes", "y"
+					puts ""
+					puts "You swing your #{character.main_hand} with all your might!"
+					puts ""
+					puts "this should be over quick."
+					puts ""
+					Battle.fight_animation
+					Battle.fight_animation
+					Battle.fight_animation
+					monster_type = "Hill Giant"
+					monster_type
+
+				when "no", "n"
+					system('clear')
+					puts ""
+					puts "That was the biggest monster you've ever seen."
+					puts ""
+					sleep(3)
+					puts ""
+					puts "           -------------------"
+					puts "          |  Welcome to town  |"
+					puts "           -------------------"
+					puts ""
+					puts "You're still brave... right?"
+					puts ""
+					character.character_sheet
+					character.update({status: 0})
+				else
+					puts ""
+					puts "What's that?"
+					puts ""
+					adventure_one(character)
+				end
+		end
+
+		def adventure_ten(character)
+			#dragon
+			puts ""
+			puts ""
+			puts "You've heard stories that Dragons exist, but you still haven't ---"
+			puts ""
+			puts "That's either a Dragon or a really really realistic statue of a..."
+			puts ""
+			puts "OMG"
+			puts ""
+			puts "Fight?"
+			puts ""
+			puts "    Yes  |  No"
+
+			answer = gets.chomp.downcase
+
+				case answer
+				when "yes", "y"
+					puts ""
+					puts "You swing your #{character.main_hand} with all your might!"
+					puts ""
+					puts "the fight begins"
+					puts ""
+					Battle.fight_animation
+					Battle.fight_animation
+					Battle.fight_animation
+					monster_type = "Hobgoblin"
+					monster_type
+
+				when "no", "n"
+					system('clear')
+					puts ""
+					puts "You run back to town and you realize you were so scared, you started crying."
+					puts "For shame!"
+					sleep(3)
+					puts ""
+					puts "           -------------------"
+					puts "          |  Welcome to town  |"
+					puts "           -------------------"
+					puts ""
+					puts "When you think about it, Hobgoblins are big and scary. There's no shame in running..."
+					puts "You're just not very brave."
+					character.character_sheet
+					character.update({status: 0})
+				else
+					puts ""
+					puts "What's that?"
+					puts ""
+					adventure_one(character)
+				end
+		end
+
+		x = rand(1..99)
+		lvl = character.level
+		mult = lvl*10
+		x = x + mult
 		case x
-		when 1..30
-			#goblin
-			monster_type = adventure_one(character)
-			return monster_type
-		when 31..60
+		when 1..25
 			#kobold
 			monster_type = adventure_two(character)
 			return monster_type
-		when 61..75
+		when 26..40
+			#goblin
+			monster_type = adventure_one(character)
+			return monster_type
+		when 41..65
 			#hobgoblin
 			monster_type = adventure_three(character)
 			return monster_type
-		when 76..88
+		when 66..77
 			#fountains
 			monster_type = adventure_four(character)
 			return monster_type
-		else 89..99
+		when 78..88
+			#find armor
+			monster_type = adventure_six(character)
+			return monster_type
+		when 89..99
+			#find weapons
 			monster_type = adventure_five(character)
+			return monster_type
+		when 100..110
+			#bugbear
+			monster_type = adventure_seven(character)
+			return monster_type
+		when 111..120
+			#ogre
+			monster_type = adventure_eight(character)
+			return monster_type
+		when 121..130
+			#hill giant
+			monster_type = adventure_nine(character)
+			return monster_type
+		when 131..140
+			#dragon
+			monster_type = adventure_ten(character)
 			return monster_type
 		end
 
@@ -568,13 +826,7 @@ class Game < ActiveRecord::Base
 
 
 
-		def adventure_six(character)
 
-		end
-
-		def adventure_seven(character)
-
-		end
 
 		def game_over(character)
 			sleep(2)
@@ -609,7 +861,7 @@ class Game < ActiveRecord::Base
 			end
 			11.times { puts ""}
 
-			puts "GAME OVER!!!!"
+			puts "                          GAME OVER!!!!"
 			5.times { puts ""}
 
 		
@@ -617,9 +869,9 @@ class Game < ActiveRecord::Base
 			i = 0
 			hof = bigarray.map do |char|
 				i += 1
-				["#{i}.", char.name, char.player.username]
+				["#{i}.", char.name, char.player.username, char.experience_total]
 			end
-			hof.unshift(["Rank", "Character", "Player"])
+			hof.unshift(["Rank", "Character", "Player", "Experience"], "----", "---------", "------", "----------")
 			# rows = []
 			# rows << [['1.', 'Paulius', "Paul"], [row2]]
 			# rows << ['2.', 'Two', 2]

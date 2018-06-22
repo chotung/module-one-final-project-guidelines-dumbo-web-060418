@@ -68,6 +68,7 @@ class Battle # < ActiveRecord::Base
 					attacker.check_xp
 				else
 					puts "#{attacker.name} lands a crushing blow to your head..."
+					defender.update({hit_points:0})
 					sleep(2)
 					defender.update({status:2})
 				end

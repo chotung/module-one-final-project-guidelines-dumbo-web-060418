@@ -48,17 +48,13 @@ class Character < ActiveRecord::Base
 		puts ""
 		puts "#{name1} has #{hit_points} HP (adjusted by #{con_total} Constitution)"
 		puts ""
+
 		current_character.update({hit_points: hit_points})
 		current_character.update({max_hp: hit_points})
-		total_armor_bonus = current_character.calculate_total_armor_bonus(dex_bonus, current_character.armor_value)
-		armor_class = current_character.calculate_armor_class(total_armor_bonus)
-		# weapon = "NONE"
-		# armor = "NONE"
-		# sheet = current_character.character_sheet(name1, hit_points, armor_class, str_total, dex_total, con_total, str_bonus, dex_bonus, con_bonus, weapon, armor )
-		# sheet
 		current_character.update({status: 0})
 		current_character.character_sheet
 		current_character
+
 	end
 
 
@@ -105,8 +101,8 @@ class Character < ActiveRecord::Base
 		hp	
 	end
 
-	def calculate_total_armor_bonus(dex_bonus, armor_bonus)
-		tab = dex_bonus + armor_bonus
+	def calculate_total_armor_bonus
+		tab = self.attribute_bonus(self.dexterity) + Armor.find_by(name:self.armor).armor_value
 		self.update({armor_value:tab})
 		tab
 	end
@@ -186,6 +182,7 @@ class Character < ActiveRecord::Base
 		end
 	end
 
+
 	def character_sheet
 		level = self.level
 		hp = self.hit_points
@@ -199,10 +196,13 @@ class Character < ActiveRecord::Base
 		xp_length = 28 - (xp.to_s.length)
 		name1 = self.name
 		name_length = 40 - (name.length)
-		armor_class = calculate_armor_class(self.armor_value)
+		total_armor_bonus = self.calculate_total_armor_bonus
+		armor_class = calculate_armor_class(total_armor_bonus)
 		weapon = self.main_hand
 		weapon_length = 32 - (self.main_hand.to_s.length)
 		armor = self.armor
+		armor_length = 33 - (self.armor.to_s.length)
+
 		puts ""
 		puts "   ~~~~~~~~~ CHARACTER SHEET ~~~~~~~~~~~"
 		puts "____________________________________________"
@@ -232,7 +232,9 @@ class Character < ActiveRecord::Base
 		weapon_length.times { print " "}
 		puts "|"
 		puts "|                                          |"
-		puts "| ARMOR : #{armor}                                 |"
+		print "| ARMOR : #{armor}"
+		armor_length.times { print " " }
+		puts "|"
 		puts "|                                          |"
 		print "| EXPERIENCE : #{xp}"
 		xp_length.times { print " "}
