@@ -3,7 +3,9 @@ require_relative 'config/environment'
 ActiveRecord::Base.logger = nil # comment out if want to see SQL logs
 
 system('clear')
-pid = fork{ exec 'afplay', "media/Far-Away-Places-Call.mp3"}
+	pid = fork{ exec 'afplay', "media/Far-Away-Places-Call.mp3"}
+	# sleep(132)
+
 current_character = Game.welcome
 current_game = Game.new_game(current_character)
 

@@ -15,8 +15,7 @@ class CreateCharacters < ActiveRecord::Migration[5.0]
         # t.string :off_hand, default:  nil
         t.integer :player_id
         t.integer :status
+        t.integer :gold, default: 0
     end
   end
 end
-
-

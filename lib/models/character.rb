@@ -81,7 +81,7 @@ class Character < ActiveRecord::Base
 		elsif attribute >= 14
 			bonus = 2
 		elsif attribute >= 12
-			bonus = 1		
+			bonus = 1
 		elsif attribute >= 10
 			bonus = 0
 		elsif attribute >= 8
@@ -98,7 +98,7 @@ class Character < ActiveRecord::Base
 
 	def calculate_hit_points(bonus, base_hp)
 		hp = base_hp + bonus
-		hp	
+		hp
 	end
 
 	def calculate_total_armor_bonus
@@ -115,7 +115,7 @@ class Character < ActiveRecord::Base
 
 
 	def check_xp
-		
+
 		xp = self.experience_total
 
 		case xp
@@ -150,7 +150,7 @@ class Character < ActiveRecord::Base
 		new_lvl = self.level + 1
 		self.update({level:new_lvl})
 		self.improve_attribute
-							
+
 
 	end
 
@@ -186,6 +186,8 @@ class Character < ActiveRecord::Base
 	def character_sheet
 		level = self.level
 		hp = self.hit_points
+		max_hp = self.max_hp
+		hp_length = 34 - "#{hp} / #{max_hp}".length
 		str_total = self.strength
 		str_bonus = attribute_bonus(str_total)
 		dex_total = self.dexterity
@@ -202,6 +204,8 @@ class Character < ActiveRecord::Base
 		weapon_length = 32 - (self.main_hand.to_s.length)
 		armor = self.armor
 		armor_length = 33 - (self.armor.to_s.length)
+		gp = self.gold
+		gp_length = 34 - (gp.to_s.length)
 
 		puts ""
 		puts "   ~~~~~~~~~ CHARACTER SHEET ~~~~~~~~~~~"
@@ -213,7 +217,9 @@ class Character < ActiveRecord::Base
 		puts "|                                          |"
 		puts "| LEVEL : #{level}                                |"
 		puts "|                                          |"
-		puts "| HP :  #{hp}                                  |"
+		print "| HP :  #{hp} / #{max_hp}"
+		hp_length.times { print " " }
+		puts "|"
 		puts "|                                          |"
 		print "| ARMOR CLASS : #{armor_class}"
 		if armor_class > 9
@@ -239,8 +245,11 @@ class Character < ActiveRecord::Base
 		print "| EXPERIENCE : #{xp}"
 		xp_length.times { print " "}
 		puts "|"
+		print "| GOLD : #{gp}"
+		gp_length.times { print " "}
+		puts "|"
 		puts "|                                          |"
-		puts "____________________________________________"	
-		
+		puts "____________________________________________"
+
 	end
 end

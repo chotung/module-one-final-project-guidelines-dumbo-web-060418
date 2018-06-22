@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.string  "main_hand"
     t.integer "player_id"
     t.integer "status"
+    t.integer "gold",             default: 0
   end
 
   create_table "games", force: :cascade do |t|
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 20180619195517) do
     t.integer "armor_value"
     t.string  "main_hand"
     t.integer "exp_value"
+    t.integer "gold"
   end
 
   create_table "players", force: :cascade do |t|

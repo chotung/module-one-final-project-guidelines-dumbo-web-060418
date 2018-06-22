@@ -20,7 +20,7 @@ class Battle # < ActiveRecord::Base
 
 			if (rand(1..20) + level + Monster.attribute_bonus(attacker.dexterity) + weapon_bonus) >= (3 + defender.armor_value + Monster.attribute_bonus(defender.dexterity))
 				damage = attack_damage(attacker)
-				damage < 0 ? damage = 0 : damage 
+				damage < 0 ? damage = 0 : damage
 				if defender.class == Character
 					new_hp = defender.hit_points - damage
 					sleep(1)
@@ -36,7 +36,7 @@ class Battle # < ActiveRecord::Base
 				puts "#{attacker.name} misses #{defender.name}"
 			end
 
-			if defender.hit_points > 0 
+			if defender.hit_points > 0
 				combat(defender, attacker)
 			else
 				if attacker.class == Character
@@ -65,38 +65,192 @@ class Battle # < ActiveRecord::Base
 						t = rand(1..4)
 						case t
 						when 1, 2 #leather
-						when 3 #chainmail
+							puts ""
+							puts "You saved a peasant when you killed the Bugbear. He offers you his family heirloom, a non magical Warhammer."
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+							character.update({main_hand:"Hammer"})
+							character.character_sheet
+								else
+							end
+						when 3 #great club
+							puts ""
+							puts "This tree branch that the Bugbear wielded would serve as an excellent Great Club."
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+							character.update({main_hand:"Great Club"})
+							character.character_sheet
+								else
+							end
 						when 4 # nothing
+							puts ""
+							puts "You open the Bugbear's treasure chest to find a Great Sword in excellent condition."
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+							character.update({main_hand:"Great Sword"})
+							character.character_sheet
+								else
+							end
 						end
 
+					elsif defender.name == "Direwolf"
+							puts "The direwolf has no treasure to speak of... you manage to find a few gold coins scattered about."
+							character.character_sheet
+							
 					elsif defender.name == "Ogre"
 						t = rand(1..4)
 						case t
 						when 1, 2 # nothing
+							puts ""
+							puts "You start to search the body, but it smells so bad you decided to walk away."
 						when 3 # Axe
+							puts ""
+							puts "In the Ogre's bag there's a well-worn Axe with an impossibly sharp blade."
+							#Axe flavor text
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+							character.update({main_hand:"+1 Axe"})
+							character.character_sheet
+								else
+							end
 						when 4 # Chainmail
+							puts ""
+							puts "The Ogre seems to have killed a fairly well equipped warrior recently."
+							puts "The helmet is smashed, but the rest of the armor would make a decent suit of Plate Armor."
+							puts ""
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+									character.update({armor:"Plate Armor"})
+									new_armor_value = Armor.find_by(name:"Plate Armor").armor_value
+									character.update({armor_value:new_armor_value})
+									character.character_sheet
+								else
+							end
 						end
 
 					elsif defender.name == "Hill Giant"
 						t = rand(1..4)
 						case t
-						when 1, 2 # nothing
+						when 1
+						puts ""
+						 puts "You search through the Giant's bag, and you find a Dagger of unusual balance and lightness."
+						 puts "This dagger is surely magical!"
+						 #flavor text for +1 sword
+						 puts "Do you want to pick it up?"
+						 puts ""
+						 puts "    Yes  |  No"
+						 answer = gets.chomp.downcase
+						 case answer
+							 when "yes", "y"
+						 character.update({main_hand:"+1 Dagger"})
+						 character.character_sheet
+							 else
+						 end
+						when 2 # nothing
+							puts ""
+							puts "You look through the giant's bag, but all you find is a ball of wax and some string."
 						when 3 # +1 sword
+							puts ""
+							puts "You search through the Giant's bag, and you find a Sword in a scabbard."
+							puts "You slowly unsheathe the Sword, and it glows with a magical radiance!"
+							#flavor text for +1 sword
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+							character.update({main_hand:"+1 Sword"})
+							character.character_sheet
+								else
+							end
 						when 4 # Plate
+							puts ""
+							puts "You have bested the Giant in combat!"
+							puts "While, searching through his bag you find a smelly but useable suit of Full Plate Armor."
+							#replace with Plate Armor
+							puts ""
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+									character.update({armor:"Full Plate Armor"})
+									new_armor_value = Armor.find_by(name:"Full Plate Armor").armor_value
+									character.update({armor_value:new_armor_value})
+									character.character_sheet
+								else
+							end
+
 						end
 					elsif defender.name == "Hatchling Dragon"
 						t = rand(1..4)
 						case t
 						when 1, 2 # +1 sword
+							puts ""
+							puts "There is a treasure chest nearby, and in it you find an extremely ornate Sword in a scabbard."
+							puts "You slowly unsheathe the Sword, and it glows with a blinding radiance!"
+							#flavor text for +1 sword
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+							character.update({main_hand:"+2 Sword"})
+							character.character_sheet
+								else
+							end
 						when 3 # Plate
+							puts ""
+							puts "There is a treasure chest nearby, and in it you find a functional suit of Full Plate Armor."
+							#replace with Full Plate Armor
+							puts ""
+							puts "Do you want to pick it up?"
+							puts ""
+							puts "    Yes  |  No"
+							answer = gets.chomp.downcase
+							case answer
+								when "yes", "y"
+									character.update({armor:"Full Plate Armor"})
+									new_armor_value = Armor.find_by(name:"Full Plate Armor").armor_value
+									character.update({armor_value:new_armor_value})
+									character.character_sheet
+								else
+							end
 						when 4 # nothing
-						end	
+							puts ""
+							puts "The poor thing's corpse is so mangled, there's nothing to be gleaned from it..."
+						end
 
 					end
 					attacker.update({status:1})
 					exp = attacker.experience_total + defender.exp_value
 					attacker.update({experience_total:exp })
 					attacker.check_xp
+					gold_value = attacker.gold + defender.gold
+					attacker.update({gold:gold_value})
 				else
 					puts "#{attacker.name} lands a crushing blow to your head..."
 					defender.update({hit_points:0})
@@ -169,7 +323,3 @@ class Battle # < ActiveRecord::Base
 		system("clear")
 	end
 end
-
-
-
-

@@ -11,6 +11,7 @@ class CreateMonsters < ActiveRecord::Migration[5.0]
         t.integer :armor_value
         t.string :main_hand
         t.integer :exp_value
+        t.integer :gold
     end
   end
 end

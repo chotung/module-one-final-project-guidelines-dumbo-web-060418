@@ -23,7 +23,9 @@ class Game < ActiveRecord::Base
 		puts " ▄▀        ▄▀▀▀▀▀▄  ▄▀   ▄▀    ▄▀▄▄▄▄                              ".red
 		puts "█         █       █ █    █     █    ▐ ™                            ".red
 		puts "▐         ▐       ▐ ▐    ▐     ▐       ".red
-		15.times { puts ""}
+		4.times { puts ""}
+		puts "                                      by Charlie Tung & Paul Bomba ".red
+		10.times { puts ""}
   		print "Press ENTER to embark on your journey..."
   		gets
 
@@ -106,51 +108,20 @@ class Game < ActiveRecord::Base
 			end
 		end
 
-		#update character and weapon schema
-
-
-		# def ask_armor(character)
-		# 	puts "Hello #{character.name} do you want armor?"
-		# 		input = gets.chomp
-		# 		while input != "yes" || "Yes" || "Y" || "y"
-		#
-		# 			puts "you should say grab some armor"
-		#
-		# 		end
-		# 	end
-		#
-		# 	def armor_choice
-		#
-		# 		if ask_armor == true
-		#
-		# 			puts "What armor would you like?"#if yes give them the choice of weapon
-		# 			puts "Leather armor"
-		# 			puts "Plate Armor"
-		# 			sleep(3)
-		# 			armor_input	= gets.chomp
-		#
-		# 			if armor_input == "Leather Armor"
-		# 				current_character.update({main_hand: "Leather Armor"})
-		#
-		# 			elsif armor_input == "Plate Armor"
-		# 				current_character.update({main_hand: "Plate Armor"})
-		#
-		# 			else armor_choice
-		# 			end
-		# 		end
-		# 	end
 		def town(character)
 			puts ""
 			puts ""
 			puts "You are milling about in town staring at your #{character.main_hand}"
 			puts ""
 			puts ""
-			puts "Your insatiable thirst for adventure compels you you leave. Do you want to travel to the edge of town?"
+			puts "Your insatiable thirst for adventure compels you you leave. You can either travel to the Dungeon or visit the Temple."
+			puts	"Where do you want to go?"
 			puts ""
-			puts " yes  |  no"
+			puts "    Dungeon  |  Temple  | Do Nothing"
 			answer = gets.chomp.downcase
 			case answer
-				when "yes", "y"
+			when "dungeon", "d", "dun", "1"
+					#Adventure
 					sleep(1)
 					puts ""
 					puts "You leave town to test your mettle in the dungeon."
@@ -163,18 +134,68 @@ class Game < ActiveRecord::Base
 					10.times { puts ""}
 					character.update({status: 1})
 					character
-				when "no", "n"
+				when "nothing", "n", "3"
+					#do nothing
 					sleep(1)
 					puts ""
 					puts "You are a coward. Have fun swinging your #{character.main_hand} all by yourself."
 					sleep(1)
 					character.update({status: 0})
 					character
+				when "temple", "temp", "t", "2"
+					puts ""
+					puts "You enter the Temple."
+					puts ""
+					cleric_name = ["Brother Arren", "Brother Prince", "Brother Charlie", "Brother Bomba"].sample
+					puts "#{cleric_name} greets you as you enter the Temple."
+					puts "Do you want healing? It will cost you 5 gold."
+					puts "You have #{character.hit_points} HP, and #{character.gold} GP."
+					puts ""
+					puts " yes  |  no"
+					heal = gets.chomp.downcase
+					 if heal == "yes" || heal == 'y'
+							 self.healing(character, cleric_name)
+					 else
+						 #put flavor text declined the brothers
+						 puts "You don't need any healing, you thank #{cleric_name}, and leave the Temple."
+						 town(character)
+					 end
 				else
 					sleep(2)
 					puts ""
 					puts "Come again?"
 					town(character)
+			end
+		end
+
+		def healing(character, cleric_name)
+
+			#gold
+			if character.gold < 5
+				puts "Sorry you don't have enough gold for that..."
+				puts "#{cleric_name} says \"We aren't running a charity here\" and kicks you out of the temple"
+				sleep(2)
+				town(character)
+			else
+				new_gold = character.gold - 5
+				character.update({gold:new_gold})
+				#healing
+				heal_amount = rand(1..8) + 1
+				new_hp = character.hit_points + heal_amount
+				new_hp > character.max_hp ? new_hp = character.max_hp : new_hp
+				character.update({hit_points:new_hp})
+				puts "#{cleric_name} heals you for #{heal_amount}."
+				puts "Do you want more healing? It will cost you 5 gold."
+				puts "You have #{character.hit_points} HP, and #{character.gold} GP."
+				puts ""
+				puts " yes  |  no"
+				heal = gets.chomp.downcase
+				 if heal == "yes" || heal == 'y'
+					 self.healing(character, cleric_name)
+				 else
+					 puts "You may have enjoyed all the healing, but now it's time to go..."
+					 town(character)
+				 end
 			end
 		end
 
@@ -513,6 +534,7 @@ class Game < ActiveRecord::Base
 					end
 
 			end
+			system('clear')
 		end
 
 		def adventure_five(character)
@@ -533,6 +555,7 @@ class Game < ActiveRecord::Base
 					puts "You enthusiastically grab a hold of your new #{wep}"
 					puts ""
 					character.update({main_hand:wep})
+					system('clear')
 					character.character_sheet
 					monster_type = :none
 					return monster_type
@@ -542,6 +565,7 @@ class Game < ActiveRecord::Base
 					puts "You're happy with your #{character.main_hand}, no reason to switch weapons now..."
 					puts ""
 					monster_type = :none
+					system('clear')
 					return monster_type
 			end
 		end
@@ -566,6 +590,7 @@ class Game < ActiveRecord::Base
 					character.update({armor:arm})
 					new_armor_value = Armor.find_by(name:arm).armor_value
 					character.update({armor_value:new_armor_value})
+					system('clear')
 					character.character_sheet
 					monster_type = :none
 					return monster_type
@@ -575,56 +600,111 @@ class Game < ActiveRecord::Base
 					puts "You're happy with your #{character.armor}, no reason to switch armor now..."
 					puts ""
 					monster_type = :none
+					system('clear')
 					return monster_type
-				end	
+				end
 		end
 
 		def adventure_seven(character)
-			#bugbear
-			puts ""
-			puts ""
-			puts "You hear the sound of heavy footfalls. That's no Goblin, that's a BUGBEAR!"
-			puts "This thing is a head and a half taller than you, and has a huge club."
-			puts "There's no way, you'll fight this thing... is there?"
+											#bugbear
+											adv7 = rand(1..2)
+											case adv7
+											when 1
+												puts ""
+												puts ""
+												puts "You hear howling in the distance that seems to be getting closer and closer..."
+												puts ""
+												sleep (2)
+												puts "The beast finally catches up with you, it's a wolf the size of a horse... a DIREWOLF!!!"
+												puts "There's no way, you'll fight this thing... is there?"
+												puts ""
+												puts "    Yes  |  No"
+												answer = gets.chomp.downcase
 
-			answer = gets.chomp.downcase
+														case answer
+														when "yes", "y"
+															puts ""
+															puts "You decide to un-\"leash\" your rabid rage on this puppy and pound it into oblivion,"
+															puts "em-\"bark\"ing it on its journey to doggie heaven!"
+															puts ""
+															puts "the fight begins"
+															puts ""
+															Battle.fight_animation
+															Battle.fight_animation
+															Battle.fight_animation
+															monster_type = "Direwolf"
+															monster_type
 
-				case answer
-				when "yes", "y"
-					puts ""
-					puts "This dungeon isn't big enough for the two of us!"
-					puts ""
-					puts "the fight begins"
-					puts ""
-					Battle.fight_animation
-					Battle.fight_animation
-					Battle.fight_animation
-					monster_type = "Bugbear"
-					monster_type
+														when "no", "n"
+															system('clear')
+															puts ""
+															puts "That was a close call... You know deep in your heart you made the right move."
+															puts ""
+															sleep(3)
+															puts ""
+															puts "           -------------------"
+															puts "          |  Welcome to town  |"
+															puts "           -------------------"
+															puts ""
+															puts "The townsfolk are impressed you were able to escape from a Direwolf"
+															puts ""
+															puts "No one faults you for running, but a stronger warrior would have shown it \"who's a good boy\"."
+															character.character_sheet
+															character.update({status: 0})
+														else
+															puts ""
+															puts "What's that?"
+															puts ""
+															adventure_one(character)
+														end
+													when 2
+														puts ""
+														puts ""
+														puts "You hear howling in the distance and it keeps getting closer..."
+														puts "The beast comes into view, its a wolf the size of a horse, the mythical Direwolf!"
+														puts "There's no way, you'll fight this thing... is there?"
+														puts ""
+														puts "    Yes  |  No"
+														answer = gets.chomp.downcase
+															case answer
+															when "yes", "y"
+																puts ""
+																puts "You decide to un-\"leash\" your rabid rage on this puppy and pound it into oblivion,"
+																puts "em-\"bark\"ing it on its journey to doggie heaven!"
+																puts ""
+																puts "the fight begins"
+																puts ""
+																Battle.fight_animation
+																Battle.fight_animation
+																Battle.fight_animation
+																monster_type = "Direwolf"
+																monster_type
 
-				when "no", "n"
-					system('clear')
-					puts ""
-					puts "That was a close call... You know deep in your heart you made the right move."
-					puts ""
-					sleep(3)
-					puts ""
-					puts "           -------------------"
-					puts "          |  Welcome to town  |"
-					puts "           -------------------"
-					puts ""
-					puts "The townsfolk are impressed you faced a Bugbear and lived"
-					puts ""
-					puts "No one faults you for running, but a stronger warrior would have dispatched it."
-					character.character_sheet
-					character.update({status: 0})
-				else
-					puts ""
-					puts "What's that?"
-					puts ""
-					adventure_one(character)
-				end
-		end
+															when "no", "n"
+																system('clear')
+																puts ""
+																puts "That was a close call... You know deep in your heart you made the right move."
+																puts ""
+																sleep(3)
+																puts ""
+																puts "           -------------------"
+																puts "          |  Welcome to town  |"
+																puts "           -------------------"
+																puts ""
+																puts "The townsfolk are impressed you were able to escape a Direwolf"
+																puts ""
+																puts "No one faults you for running, but a stronger warrior would have shown that dog \"who's a good boy\"."
+																character.character_sheet
+																character.update({status: 0})
+															else
+																puts ""
+																puts "What's that?"
+																puts ""
+																adventure_one(character)
+															end
+														end
+					end
+
 
 		def adventure_eight(character)
 			#ogre
@@ -673,7 +753,7 @@ class Game < ActiveRecord::Base
 					puts "What's that?"
 					puts ""
 					adventure_one(character)
-				end		
+				end
 		end
 
 		def adventure_nine(character)
@@ -752,7 +832,7 @@ class Game < ActiveRecord::Base
 					Battle.fight_animation
 					Battle.fight_animation
 					Battle.fight_animation
-					monster_type = "Hobgoblin"
+					monster_type = "Hatchling Dragon"
 					monster_type
 
 				when "no", "n"
@@ -828,7 +908,7 @@ class Game < ActiveRecord::Base
 
 	end
 
-
+sleep(1)
 
 
 
@@ -868,12 +948,13 @@ class Game < ActiveRecord::Base
 			else
 				puts "       #{character.name} was probably the worst adventurer that ever lived."
 			end
+			sleep(1)
 			11.times { puts ""}
 
 			puts "                          GAME OVER!!!!"
 			5.times { puts ""}
 
-		
+
 			bigarray = Character.all.max_by(5) { |c| c.experience_total }
 			i = 0
 			hof = bigarray.map do |char|
