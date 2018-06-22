@@ -78,15 +78,23 @@ class Game < ActiveRecord::Base
 				when "sword", "rusty sword", "rusty", "rust", "r"
 					weapon = Weapon.find_by(id: 12).name
 					self.character.update({main_hand: weapon})
+					puts ""
+					puts "You grip the Rusty Sword. It's not perfect, but it'll do for now."
 				when "club", "c"
 					weapon1 = Weapon.find_by(id: 1).name
 					self.character.update({main_hand: weapon1})
+					puts ""
+					puts "Ah, the Club, a stalwart of adventurers, far and wide"
 				when "dagger", "d"
 					weapon2 = Weapon.find_by(id: 2).name
 					self.character.update({main_hand: weapon2})
+					puts ""
+					puts "You select the Dagger, a trusted, reliable weapon."
 				when "+1 sword"
 					weapon3 = Weapon.find_by(id: 11).name
 					self.character.update({main_hand: weapon3})
+					puts ""
+					puts "You select the Magic Sword. You are a cheater!"
 				else
 					puts ""
 					puts "Sorry, we don't have a #{weapon_input}"
@@ -540,7 +548,7 @@ class Game < ActiveRecord::Base
 
 		def adventure_six(character)
 			#armor adventure
-			arm = ["Cloth Armor", "Leather Armor", "Chainmail", "Plate Armor"].sample
+			arm = ["Leather Armor", "Chainmail"].sample
 
 			puts ""
 			puts "you come across the body of a slain adventurer"
@@ -751,6 +759,7 @@ class Game < ActiveRecord::Base
 					system('clear')
 					puts ""
 					puts "You run back to town and you realize you were so scared, you started crying."
+					puts ""
 					puts "For shame!"
 					sleep(3)
 					puts ""
@@ -771,7 +780,7 @@ class Game < ActiveRecord::Base
 		end
 
 		x = rand(1..99)
-		lvl = character.level
+		lvl = (character.level)-1
 		mult = lvl*10
 		x = x + mult
 		case x
@@ -871,7 +880,7 @@ class Game < ActiveRecord::Base
 				i += 1
 				["#{i}.", char.name, char.player.username, char.experience_total]
 			end
-			hof.unshift(["Rank", "Character", "Player", "Experience"], "----", "---------", "------", "----------")
+			hof.unshift(["Rank", "Character", "Player", "Experience"], ["----", "---------", "------", "----------"])
 			# rows = []
 			# rows << [['1.', 'Paulius', "Paul"], [row2]]
 			# rows << ['2.', 'Two', 2]

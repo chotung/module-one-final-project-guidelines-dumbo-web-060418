@@ -61,6 +61,37 @@ class Battle # < ActiveRecord::Base
 							end
 						else
 						end
+					elsif defender.name == "Bugbear"
+						t = rand(1..4)
+						case t
+						when 1, 2 #leather
+						when 3 #chainmail
+						when 4 # nothing
+						end
+
+					elsif defender.name == "Ogre"
+						t = rand(1..4)
+						case t
+						when 1, 2 # nothing
+						when 3 # Axe
+						when 4 # Chainmail
+						end
+
+					elsif defender.name == "Hill Giant"
+						t = rand(1..4)
+						case t
+						when 1, 2 # nothing
+						when 3 # +1 sword
+						when 4 # Plate
+						end
+					elsif defender.name == "Hatchling Dragon"
+						t = rand(1..4)
+						case t
+						when 1, 2 # +1 sword
+						when 3 # Plate
+						when 4 # nothing
+						end	
+
 					end
 					attacker.update({status:1})
 					exp = attacker.experience_total + defender.exp_value
